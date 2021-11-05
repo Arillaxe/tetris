@@ -1,30 +1,38 @@
-import TableImage from '../assets/table.png';
+import { AssetsManager } from './AssetsManager';
+import { ConfigManager, gameOptions } from './ConfigManager';
+import { RenderManager } from './RenderManager';
 
-type gameOptions = {
-  width: number,
-  height: number,
-};
 
 export class Game {
-  private tableImage: HTMLImageElement;
+  private configManager: ConfigManager;
+  private assetsManager: AssetsManager;
+  private renderManager: RenderManager;
+  private needToRender = false;
 
   constructor (
-    private readonly ctx: CanvasRenderingContext2D,
-    private readonly options: gameOptions,
+    ctx: CanvasRenderingContext2D,
+    options?: gameOptions,
   ) {
-    this.tableImage = new Image();
-    this.tableImage.src = TableImage;
-
-    this.tableImage.onload = () => this.render();
+    this.configManager = new ConfigManager(options);
+    this.assetsManager = new AssetsManager();
+    this.renderManager = new RenderManager(ctx, this.assetsManager, this.configManager);
+    this.assetsManager.onProgressChange(console.log);
   }
 
-  clearScreen () {
-    this.ctx.clearRect(0, 0, this.options.width, this.options.height);
+  start () {
+    this.needToRender = true;
+
+    this.render();
   }
 
-  render () {
-    this.clearScreen();
+  stop () {
+    this.needToRender = false;
+  }
 
-    this.ctx.drawImage(this.tableImage, 0, 0, this.options.width, this.options.height);
+  private render () {
+    this.renderManager.clear();
+    this.renderManager.drawWalls();
+
+    if (this.needToRender) requestAnimationFrame(this.render.bind(this));
   }
 }
