@@ -8,7 +8,7 @@ export type gameOptions = {
     width: number,
     height: number,
   },
-};
+}
 
 export class ConfigManager {
   private _options: gameOptions;
@@ -19,7 +19,6 @@ export class ConfigManager {
   }
 
   getOptions () {
-    console.log(this._options);
     return this._options;
   }
 }
