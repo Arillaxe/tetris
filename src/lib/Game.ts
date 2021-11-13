@@ -1,6 +1,7 @@
 import { AssetsManager } from './AssetsManager';
 import { Brick, BricksManager } from './BricksManager';
 import { ConfigManager, gameOptions } from './ConfigManager';
+import { InputManager } from './InputManager';
 import { RenderManager } from './RenderManager';
 import { TimeManager } from './TimeManager';
 
@@ -11,6 +12,7 @@ export class Game {
   private renderManager: RenderManager;
   private bricksManager: BricksManager;
   private timeManager: TimeManager;
+  private inputManager: InputManager;
   private needToRender = false;
   private currentBrick: Brick;
   private gameSpeed = 300;
@@ -24,6 +26,7 @@ export class Game {
     this.renderManager = new RenderManager(ctx, this.assetsManager, this.configManager);
     this.bricksManager = new BricksManager();
     this.timeManager = new TimeManager();
+    this.inputManager = new InputManager();
 
     this.assetsManager.onProgressChange(console.log);
     this.currentBrick = this.bricksManager.getRandomBrick();

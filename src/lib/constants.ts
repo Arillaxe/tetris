@@ -8,6 +8,13 @@ export const DEFAULT_GAME_OPTIONS = {
   },
 };
 
+export const INPUT_BINDS = {
+  UP: 87,
+  DOWN: 83,
+  RIGHT: 68,
+  LEFT: 65,
+};
+
 export const ASSETS = {
   atlas: 'assets/tetris_atlas.png',
 };
